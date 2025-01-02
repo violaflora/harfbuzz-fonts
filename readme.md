@@ -10,7 +10,9 @@ contains some directories copied directly from that repo:
 ## fonts:
 - `thornify` makes your text input more old-englishlike by converting 'th' to thorn (þ), 'w' to wynn (ƿ), j to i and u to v.
 
-## building
+![The sentence "the quick brown fox jumps over the lazy dog" in a regular font and then in the thornify font.](https://raw.githubusercontent.com/violaflora/harfbuzz-fonts/refs/heads/main/thornify/thornify.png?token=GHSAT0AAAAAACU4ZYCWEAJ3YOMDZQPPEHTGZ3WN3RA)
+
+## building:
 each font directory contains a `Makefile`, so you can build the font by running `make`
 
 you can use a tool like FontGoggles (built with wasm harfbuzz support) to visualize the font.
