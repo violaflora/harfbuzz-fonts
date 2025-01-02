@@ -1,0 +1,1 @@
+/Users/violetedwards/Code/harfbuzz-wasm-fonts/thornify/target/wasm32-unknown-unknown/release/thornify.wasm: /Users/violetedwards/Code/harfbuzz-wasm-fonts/harfbuzz-wasm/src/lib.rs /Users/violetedwards/Code/harfbuzz-wasm-fonts/thornify/src/lib.rs
