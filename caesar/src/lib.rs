@@ -1,4 +1,4 @@
-// based on https://github.com/DlieBG/harfbuzz_madness
+// based on https://github.com/TheAlgorithms/Rust/blob/master/src/ciphers/caesar.rs
 use harfbuzz_wasm::{debug, Font, Glyph, GlyphBuffer};
 use wasm_bindgen::prelude::*;
 
@@ -17,11 +17,18 @@ pub fn shape(
     let buf_u8: Vec<u8> = buffer.glyphs.iter().map(|g| g.codepoint as u8).collect();
     let str_buf = String::from_utf8_lossy(&buf_u8);
 
-    let res_str: String = format!("{}", str_buf)
+    /*
+    two things need to happen here: the caesar rotation needs to be stored
+    and the "Caesar():" prefix needs to be omitted from the res_str
+    */
+
+    let (rotation, cut_str) = find_rotation(&str_buf);
+
+    let res_str: String = format!("{}", cut_str)
         .chars()
         .map(|c| {
             if c.is_ascii_alphabetic() {
-                shift_char(c, 1)
+                shift_char(c, rotation)
             } else {
                 c
             }
@@ -58,4 +65,17 @@ fn shift_char(c: char, rotation: isize) -> char {
     let rotation = rotation as u8; // Safe cast as rotation is within [0, 25]
 
     (((c as u8 - first) + rotation) % 26 + first) as char
+}
+
+fn find_rotation(str_buf: &str) -> (isize, &str) {
+    if let Some((rotation_part, text)) = str_buf.split_once(':') { // ["Caesar(1):", "Hello World!"]
+        if rotation_part.starts_with("Caesar(") && rotation_part.ends_with(")") {
+            let rotation_str = &rotation_part[7..rotation_part.len() - 1];
+            if let Ok(rotation) = rotation_str.parse::<isize>() {
+                return (rotation, text.trim());
+            }
+        }
+    }
+    // default
+    (0, str_buf)
 }
